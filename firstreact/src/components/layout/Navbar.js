@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 
 const Navbar = ({icon,title}) => {
@@ -10,9 +11,9 @@ const Navbar = ({icon,title}) => {
                 <i className={icon}/> {title} </h1>
           <ul>
             <li>
-              <a href='/'>Home</a>
+              <Link to='/'>Home</Link>
             </li>
-            <li> <a href='/about'>About</a></li>
+            <li> <Link to='/about'>About</Link></li>
           </ul>
 
 
