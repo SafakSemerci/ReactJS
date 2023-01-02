@@ -1,12 +1,14 @@
-import React  from 'react'
+import React, { Fragment,Component }  from 'react'
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom' 
 import Navbar from './components/layout/Navbar';
 import Users from './components/Users/Users';
 import Search from './components/Users/Search';
 import Alert from './components/layout/Alert';
+import About from './components/pages/About';
 import axios from 'axios';
 import './App.css'
 
-class App extends React.Component{
+class App extends Component{
 
   state={
     users:[],
@@ -39,18 +41,31 @@ class App extends React.Component{
 
 
     return (
+      <Router>
       <div className="App">
         <Navbar/>
         <div className='container'>
           <Alert alert={this.state.alert}/>
-          <Search searchUsers={this.searchUsers} clearUsers = {this.clearUsers} showClear={ this.state.users.length>0 ? true: false} setAlert={this.setAlert} />
-          <Users loading={this.state.loading} users={this.state.users} />
+
+          <Routes>
+            {/*Render yerine elemnent kullandım düzeldi.*/}
+            <Route exact path='/' element={( 
+            <Fragment>
+              <Search searchUsers={this.searchUsers} clearUsers = {this.clearUsers} showClear={ this.state.users.length>0 ? true: false} setAlert={this.setAlert} />
+              
+              <Users loading={loading} users={users} />
+              </Fragment>
+            )} 
+            />
+            <Route exact path='/about' element={<About/>}/>
+          </Routes>
+               
         </div>
       </div>
+      </Router>
     );
   }
 
-  
 }
 
 export default App;
