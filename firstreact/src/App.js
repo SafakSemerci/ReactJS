@@ -1,22 +1,46 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import Navbar from './components/layout/Navbar';
-import UserItem from './components/Users/UserItem';
+import Users from './components/Users/Users';
+import Search from './components/Users/Search';
+import axios from 'axios';
 import './App.css'
 
 class App extends React.Component{
 
+
+  state={
+    users:[],
+    loading : false
+  }
+
+
+  async componentDidMount(){
+
+    console.log(process.env.REACT_APP_GITHUB_CLIENT_ID);
+    this.setState({loading : true});
+
+
+    const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+
+  this.setState({users: res.data, loading : false});
+
+  }
+
+
+
   render(){
     //return React.createElement() create new div or a or i something like that.
 
-    const name = 'Şafak Semerci'
     return (
       <div className="App">
         <Navbar/>
-        <UserItem/>
+        <div className='container'>
+          <Search></Search>
+          <Users loading={this.state.loading} users={this.state.users} />
+        </div>
       </div>
     );
   }
-
 
   
 }
